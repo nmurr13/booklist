@@ -24,17 +24,23 @@ app.use(express.urlencoded({ extended: true })) // body parser this is how we ge
 
 // Create - POST
 app.post("/books", async (req, res) => {
-    if (req.body.completed === "on") {
-        // if checked
-        req.body.completed = true
-    } else {
-        // if not checked
-        req.body.completed = false
+    try {
+        if (req.body.completed === "on") {
+            // if checked
+            req.body.completed = true
+        } else {
+            // if not checked
+            req.body.completed = false
+        }
+    
+        let newBook = await Book.create(req.body)
+        res.send(newBook)
+        
+    } catch (err) {
+        res.send(err)
     }
-
-    let newBook = await Book.create(req.body)
-    res.send(newBook)
 })
+
 //SHOW- GET Rendering only one book.
 
 //Server Listener
