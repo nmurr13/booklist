@@ -117,6 +117,60 @@ app.get("/books/edit/:id", async (req, res) => {
     }
 })
 
+
+// Seed - GET
+app.get('/books/seed', async (req, res) => {
+    try {
+        // delete everything in the database
+        await Book.deleteMany({})
+        // Create data in the database
+        await Book.create(
+            [
+                {
+                  title: 'Cracking the Coding Interview',
+                  author: 'Gayle Laakmann McDowell',
+                },
+                {
+                  title: 'HTML and CSS: Design and Build Websites',
+                  author: 'Jon Duckett',
+                },
+                {
+                  title: 'JavaScript and JQuery: Interactive Front-End Web Development',
+                  author: 'Jon Duckett',
+                },
+                {
+                  title: 'You Don’t Know JS Yet',
+                  author: 'Kyle Simpson',
+                },
+                {
+                  title:
+                    'Design Patterns: Elements of Reusable Object-Oriented Software',
+                  author: 'Erich Gamma',
+                },
+                {
+                  title: 'Frontend Unicorn',
+                  author:
+                    'Michał Malewicz, Szymon Adamiak, Albert Pawłowski, and Albert Walicki',
+                },
+                {
+                  title: 'Don’t Make Me Think',
+                  author: 'Steve Krug',
+                },
+              ]
+        )
+        // redirect back to the index
+        res.redirect('/books')
+    } catch (error) {
+        res.send('something went wrong with your seeds')
+    }
+})
+
+
+
+
+
+
+
 // Show - GET rendering only one book
 app.get("/books/:id", async (req, res) => {
     // find a book by _id
